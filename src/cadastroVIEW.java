@@ -152,11 +152,11 @@ public class cadastroVIEW extends javax.swing.JFrame {
         st.executeUpdate(sql);
         
         i = (i+1);
-        if (i == 2 || i == 3 || i == 4|| i == 5){
+        if (i == 1 || i == 2 || i == 3 || i == 4|| i == 5){
             i = 6;
         }
         
-        JOptionPane.showMessageDialog(null, "O item foi cadastrado com sucesso!");
+        produtodao.adicionar(produto);
         } catch (SQLException ex) {
             Logger.getLogger(cadastroVIEW.class.getName()).log(Level.SEVERE, null, ex);
         } catch(Exception e){
