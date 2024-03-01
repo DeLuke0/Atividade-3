@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class cadastroVIEW extends javax.swing.JFrame {
+    int i = 1;
 
     public cadastroVIEW() {
         initComponents();
@@ -132,24 +133,34 @@ public class cadastroVIEW extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         ProdutosDTO produto = new ProdutosDTO();
         ProdutosDAO produtodao = new ProdutosDAO();
+        String sql;
         
         try{
         conectaDAO conector = new conectaDAO();
         conector.connectDB();
         Statement st = conector.conn.createStatement();
         
+        int id = i;
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
         String status = "A Venda";
+        produto.setId(id);
         produto.setNome(nome);
         produto.setValor(Integer.parseInt(valor));
         produto.setStatus(status);
+        sql = "insert into `produtos` (`id`, `nome`, `valor`, `status`) values ('" + produto.getId() + "', '" + produto.getNome() + "', '" + produto.getValor() + "', '" + produto.getStatus() + "')";
+        st.executeUpdate(sql);
         
-        produtodao.cadastrarProduto(produto);
+        i = (i+1);
+        if (i == 2 || i == 3 || i == 4|| i == 5){
+            i = 6;
+        }
+        
+        JOptionPane.showMessageDialog(null, "O item foi cadastrado com sucesso!");
         } catch (SQLException ex) {
             Logger.getLogger(cadastroVIEW.class.getName()).log(Level.SEVERE, null, ex);
         } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro ao adicionar os valores");
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o novo produto!");
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
