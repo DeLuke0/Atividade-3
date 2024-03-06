@@ -2,6 +2,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 
@@ -32,6 +33,38 @@ public class ProdutosDAO {
     
     public static ArrayList<ProdutosDTO> listarProdutos(){
         return listagem;
-    }      
+    }  
+    
+    public static boolean venderProduto(ProdutosDTO p){
+        try{
+            conectaDAO conector = new conectaDAO();
+            conector.connectDB();
+            Statement st = conector.conn.createStatement();
+            String sql;
+            sql = "select produtos.status from produtos where id = " + p.getId();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+            switch (rs.getString(1)) {
+                case "Vendido" -> {
+                    JOptionPane.showMessageDialog(null, "Este produto ja foi vendido");
+                    return true;
+                }
+                case "A Venda" -> {
+                    sql = "update produtos set status = 'Vendido' where id = " + p.getId();
+                    st.executeUpdate(sql);
+                    return true;
+                }
+                default -> {
+                    JOptionPane.showMessageDialog(null, "Erro ao vender o produto");
+                    return false;
+                }
+            }
+            }
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return false;
+    }
 }
 
