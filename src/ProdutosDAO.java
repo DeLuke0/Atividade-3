@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 
 public class ProdutosDAO {
@@ -65,6 +66,43 @@ public class ProdutosDAO {
             JOptionPane.showMessageDialog(null, e);
         }
         return false;
+    }
+    
+    public static DefaultTableModel listarProdutosVendidos(){
+        try{
+        // Conexão com o banco de dados
+        conectaDAO conector = new conectaDAO();
+        conector.connectDB();
+        Statement st = conector.conn.createStatement();
+        // Declaração das variáveis
+        String sql;
+        int i = 0;
+        String[] colunas = {"ID", "Nome do Produto", "Valor do Produto", "Status da Venda"};
+        DefaultTableModel tabela = new DefaultTableModel(colunas, 0);
+        // Laço de repetição
+        for(i = 0; i < 1000; i++){
+            sql = "select * from produtos where id = " + i + " and status = 'Vendido'";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                int valor = rs.getInt("valor");
+                String status = rs.getString("status");
+                // Laço de repetição responsável por atualizar as linhas da tabela
+                String[] linha = {
+                Integer.toString(id),
+                nome,
+                Integer.toString(valor),
+                status
+            };
+            tabela.addRow(linha);
+        }}
+        // Comandos para a inserção dos dados na tabela
+        return tabela;
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
     }
 }
 

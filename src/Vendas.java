@@ -1,9 +1,3 @@
-
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
 public class Vendas extends javax.swing.JFrame {
 
     public Vendas() {
@@ -26,7 +20,7 @@ public class Vendas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
         jLabel1.setText("Produtos Vendidos");
 
-        tblVendidos.setModel(montarTabela());
+        tblVendidos.setModel(ProdutosDAO.listarProdutosVendidos());
         jScrollPane1.setViewportView(tblVendidos);
 
         btnVoltar.setText("Voltar");
@@ -129,43 +123,5 @@ public class Vendas extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tblVendidos;
     // End of variables declaration//GEN-END:variables
-private DefaultTableModel montarTabela(){
-        try{
-        // Conexão com o banco de dados
-        conectaDAO conector = new conectaDAO();
-        conector.connectDB();
-        Statement st = conector.conn.createStatement();
-        // Declaração das variáveis
-        String sql;
-        int i = 0;
-        String[] colunas = {"ID", "Nome do Produto", "Valor do Produto", "Status da Venda"};
-        DefaultTableModel tabela = new DefaultTableModel(colunas, 0);
-        // Laço de repetição
-        for(i = 0; i < 1000; i++){
-            sql = "select * from produtos where id = " + i + " and status = 'Vendido'";
-            ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String nome = rs.getString("nome");
-                int valor = rs.getInt("valor");
-                String status = rs.getString("status");
-                // Laço de repetição responsável por atualizar as linhas da tabela
-                String[] linha = {
-                Integer.toString(id),
-                nome,
-                Integer.toString(valor),
-                status
-            };
-            tabela.addRow(linha);
-        }}
-        // Comandos para a inserção dos dados na tabela
-        tblVendidos.setModel(tabela);
-        tblVendidos.setAutoCreateRowSorter(true);
-        return tabela;
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-        return null;
-    }
 
 }

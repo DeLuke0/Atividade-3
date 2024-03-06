@@ -151,7 +151,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         st.executeUpdate(sql);
         
         i = (i+1);
-        if (i == 1 || i == 2 || i == 3 || i == 4|| i == 5){
+        if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4|| i == 5){
             i = 6;
         }
         

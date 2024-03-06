@@ -10,7 +10,7 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     public listagemVIEW() {
         initComponents();
-        montarTabela();
+        montarTabelaAVenda();
         Modelo = new DefaultListModel();
     }
 
@@ -31,7 +31,7 @@ public class listagemVIEW extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        listaProdutos.setModel(montarTabela());
+        listaProdutos.setModel(montarTabelaAVenda());
         jScrollPane1.setViewportView(listaProdutos);
 
         jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
@@ -172,7 +172,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private DefaultTableModel montarTabela(){
+    private DefaultTableModel montarTabelaAVenda(){
         try{
         // Conexão com o banco de dados
         conectaDAO conector = new conectaDAO();
@@ -202,8 +202,6 @@ public class listagemVIEW extends javax.swing.JFrame {
             tabela.addRow(linha);
         }}
         // Comandos para a inserção dos dados na tabela
-        listaProdutos.setModel(tabela);
-        listaProdutos.setAutoCreateRowSorter(true);
         return tabela;
         } catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
