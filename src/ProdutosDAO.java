@@ -54,6 +54,7 @@ public class ProdutosDAO {
                 case "A Venda" -> {
                     sql = "update produtos set status = 'Vendido' where id = " + p.getId();
                     st.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
                     return true;
                 }
                 default -> {
